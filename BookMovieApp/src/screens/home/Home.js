@@ -68,70 +68,37 @@ class Home extends Component {
   async componentWillMount() {
     //Get Upcoming Movies
     let that = this;
-    fetch(this.props.baseUrl, {
-    method: 'GET',
-    headers: {
-        'Accept': 'application/json',
-    },})
+    fetch(this.props.baseUrl+"movies?status=PUBLISHED", {
+    method: 'GET'})
 .then(response => response.json())
-.then(response =>that.setState({ upcomingMovies:response}));
-console.log(that.state.upcomingMovies)
+.then(response =>that.setState({ upcomingMovies:response.movies}));
+//console.log(that.state.upcomingMovies)
 
     //Get Released Movies
-    fetch(this.props.baseUrl, {
+    fetch(this.props.baseUrl+"movies?status=RELEASED", {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
     },})
 .then(response => response.json())
-.then(response =>that.setState({ releasedMovies:response}));
+.then(response =>that.setState({ releasedMovies:response.movies}));
 
-    fetch(this.props.baseUrl, {
+    // Get Genres
+    fetch(this.props.baseUrl + "genres", {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
     },}).then(response => response.json())
-.then(response =>{
-  const s=[];
-        for(var key in response) {
-          for (var key1 in response[key]) {
-            if(key1==="genres")
-            {
-              for(var key2 in response[key][key1])
-                s.push(response[key][key1][key2]);
-            }
-          }
-       }
-       
-      function removeDuplicates(s) {
-          return s.filter((item, 
-              index) => s.indexOf(item) === index);
-      }
-      const genresListraw=removeDuplicates(s);
-     
-        that.setState({ genresList: genresListraw });
-});
+  .then(response => that.setState({ genresList:response.genres}));
 
     //Get Artists
-    fetch(this.props.baseUrl, {
+    fetch(this.props.baseUrl + "artists", {
       method: 'GET',
       headers: {
           'Accept': 'application/json',
       },})
   .then(response => response.json())
-  .then(response =>{
-    const s = [];
-    for(var key in response) {
-      for (var key1 in response[key]) {
-        if(key1==="artists")
-        {
-          for(var key2 in response[key][key1])
-            s.push(response[key][key1][key2]);
-        }
-      }
-   }
-    that.setState({ artistsList: s});
-  });
+  .then(response =>that.setState({artistsList : response.artists}));
   }
 
   movieNameChangeHandler = event => {
@@ -163,7 +130,7 @@ console.log(that.state.upcomingMovies)
 
   filterApplyHandler = () => {
 
-    let queryString = "?status=RELEASED";
+    let queryString = "movies?status=RELEASED";
     if (this.state.movieName !== "") {
       queryString += "&title=" + this.state.movieName;
     }
@@ -186,8 +153,7 @@ console.log(that.state.upcomingMovies)
                 'Accept': 'application/json',
             },})
         .then(response => response.json())
-        .then(response =>console.log(response)
-        );
+        .then(response =>this.setState({ releasedMovies:response.movies}))
           console.log(this.props.baseUrl + encodeURI(queryString));
 
   }
@@ -236,21 +202,19 @@ console.log(that.state.upcomingMovies)
                   <Input id="movieName" onChange={this.movieNameChangeHandler} />
                 </FormControl>
                 <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="select-multiple-checkbox"> Genre</InputLabel>
+                  <InputLabel htmlFor="select-multiple-checkbox">Genres</InputLabel>
                   <Select
-                    multiple
-                    input={<Input id="select-multiple-checkbox" />}
-                    renderValue={selected => selected.join(',')}
-                    value={this.state.genres}
-                    onChange={this.genreSelectHandler}>
-                    <MenuItem value="0">None
-                   </MenuItem>
-                    {this.state.genresList.map(genre => (
-                      <MenuItem key={"genre" + genre.id} value={genre}>
-                        <Checkbox checked={this.state.genres.indexOf(genre) > - 1} />
-                        <ListItemText primary={genre} />
-                      </MenuItem>
-                    ))}
+                      multiple
+                      input={<Input id="select-multiple-checkbox-genre" />}
+                      renderValue={selected => selected.join(',')}
+                      value={this.state.genres}
+                      onChange={this.genreSelectHandler}>
+                      {this.state.genresList.map(genre => (
+                          <MenuItem key={genre.id} value={genre.genre}>
+                              <Checkbox checked={this.state.genres.indexOf(genre.genre) > -1} />
+                              <ListItemText primary={genre.genre} />
+                          </MenuItem>
+                      ))}
                   </Select>
                 </FormControl>
                 <FormControl className={classes.formControl}>
@@ -262,7 +226,7 @@ console.log(that.state.upcomingMovies)
                     value={this.state.artists}
                     onChange={this.artistsSelectHandler}>
                     <MenuItem value="0">None
-                   </MenuItem>
+                  </MenuItem>
                     {this.state.artistsList.map(artist => (
                       <MenuItem key={"artist" + artist.id} value={artist.first_name + " " + artist.last_name}>
                         <Checkbox checked={this.state.artists.indexOf(artist.first_name + " " + artist.last_name) > - 1} />
