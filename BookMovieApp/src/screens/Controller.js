@@ -9,16 +9,17 @@ class Controller extends Component {
 
   constructor() {
     super();
-    this.baseUrl = "https://akash-66.github.io/Movie-Api-dB/moviesData.json";
+    //this.baseUrl = "https://akash-66.github.io/Movie-Api-dB/newdb.json";
+    this.baseUrlNew = "http://localhost:8085/api/v1/";
   }
   render() {
     return (
       <Router>
         <div className="main-container">
-          <Route exact path='/' render={(props) => <Home {...props} baseUrl={this.baseUrl} />} />
-          <Route path='/movie/:id' render={(props) => <Details {...props} baseUrl={this.baseUrl} />} />
-          <Route path='/bookshow/:id' render={(props) => <BookShow {...props} baseUrl={this.baseUrl} />} />
-          <Route path='/confirm/:id' render={(props) => <Confirmation {...props} baseUrl={this.baseUrl} />} />
+          <Route exact path='/' render={(props) => <Home {...props}  baseUrl={this.baseUrlNew} />} />
+          <Route path='/movie/:id' render={(props) => <Details {...props} baseUrl={this.baseUrlNew} />} />
+          <Route path='/bookshow/:id' render={(props) => <BookShow {...props} baseUrl={this.baseUrlNew} />} />
+          <Route path='/confirm/:id' render={(props) => <Confirmation {...props} baseUrl={this.baseUrlNew} />} />
         </div>
       </Router>
     )
