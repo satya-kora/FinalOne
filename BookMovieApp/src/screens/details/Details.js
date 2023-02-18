@@ -49,14 +49,14 @@ class Details extends Component {
     }
 
     componentWillMount() {
-        fetch(this.props.baseUrl, {
+        fetch(this.props.baseUrl+"movies/", {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
             },})
         .then(response => response.json())
         .then(response =>{
-            let obj = response.find(o => o.id === `${this.props.match.params.id}`);
+            let obj = response.movies.find(o => o.id === `${this.props.match.params.id}`);
             this.setState({ movie: obj });
         });
 
