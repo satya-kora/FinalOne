@@ -68,16 +68,17 @@ class Home extends Component {
   async componentWillMount() {
     //Get Upcoming Movies
     let that = this;
-    fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json', {
+    fetch(this.props.baseUrl, {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
     },})
 .then(response => response.json())
 .then(response =>that.setState({ upcomingMovies:response}));
+console.log(that.state.upcomingMovies)
 
     //Get Released Movies
-    fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json', {
+    fetch(this.props.baseUrl, {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
@@ -85,17 +86,16 @@ class Home extends Component {
 .then(response => response.json())
 .then(response =>that.setState({ releasedMovies:response}));
 
-    //Get Genres
-    fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json', {
+    fetch(this.props.baseUrl, {
     method: 'GET',
     headers: {
         'Accept': 'application/json',
     },}).then(response => response.json())
 .then(response =>{
-  const s=new Array();
+  const s=[];
         for(var key in response) {
           for (var key1 in response[key]) {
-            if(key1=="genres")
+            if(key1==="genres")
             {
               for(var key2 in response[key][key1])
                 s.push(response[key][key1][key2]);
@@ -113,17 +113,17 @@ class Home extends Component {
 });
 
     //Get Artists
-    fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json', {
+    fetch(this.props.baseUrl, {
       method: 'GET',
       headers: {
           'Accept': 'application/json',
       },})
   .then(response => response.json())
   .then(response =>{
-    const s=new Array();
+    const s = [];
     for(var key in response) {
       for (var key1 in response[key]) {
-        if(key1=="artists")
+        if(key1==="artists")
         {
           for(var key2 in response[key][key1])
             s.push(response[key][key1][key2]);
@@ -180,19 +180,7 @@ class Home extends Component {
       queryString += "&end_date=" + this.state.releaseDateEnd
     }
 
-   let that = this;
-    // let dataFilter = null;
-    // let xhrFilter = new XMLHttpRequest();
-    // xhrFilter.addEventListener("readystatechange", function () {
-    //   if (this.readyState === 4) {
-    //     that.setState({ releasedMovies: JSON.parse(this.responseText).movies });
-    //   }
-    // })
-
-    // xhrFilter.open("GET", this.props.baseUrl + "movies" + encodeURI(queryString));
-    // xhrFilter.setRequestHeader("Cache-Control", "no-cache");
-    // xhrFilter.send(dataFilter);
-    fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json' + encodeURI(queryString), {
+    fetch(this.props.baseUrl + encodeURI(queryString), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -200,7 +188,7 @@ class Home extends Component {
         .then(response => response.json())
         .then(response =>console.log(response)
         );
-          console.log('https://akash-66.github.io/Movie-Api-dB/moviesData.json' + encodeURI(queryString));
+          console.log(this.props.baseUrl + encodeURI(queryString));
 
   }
 

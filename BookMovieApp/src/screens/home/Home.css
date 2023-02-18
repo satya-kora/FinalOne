@@ -15,42 +15,44 @@
 ::-webkit-scrollbar-thumb:hover {
     background: grey;
 }
-.flex-container
-{
-display:flex;
+
+.movie-poster {
+    height: 100%;
+    width: auto;
 }
-.flex-container > div {
+
+.flex-container {
+    display: flex;
+}
+
+.flex-container>div {
     margin: 16px;
-  }
-  
-  .right {
-    padding-top:20px;
-  width:24%;
 }
+
 .left {
-    width:76%;
-  }
-  .marginMovie{
-      margin:20px;
-  }
+    width: 76%;
+}
 
-  @media (max-width: 992px) {
+.right {
+    padding-top: 20px;
+    width: 24%;
+}
+
+.released-movie-grid-item {
+    margin: 15px;
+}
+
+@media (max-width: 992px) {
+    .flex-container {
+        flex-direction: column;
+    }
     .left {
-        width:100%;
-      }
-
-
-      .right {
-        width:90%;
-      }
-
-    .flex-container{
-       flex-direction: column;
+        width: 100%;
     }
-
-    .marginMovie{
-        margin:8px;
+    .right {
+        width: 90%;
     }
-
-
-  }
+    .released-movie-grid-item {
+        margin: 8px;
+    }
+}
