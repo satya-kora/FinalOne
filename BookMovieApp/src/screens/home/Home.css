@@ -23,14 +23,12 @@ display:flex;
     margin: 16px;
   }
   
-
+  .right {
+    padding-top:20px;
+  width:24%;
+}
 .left {
     width:76%;
-  }
-
-  .right {
-      padding-top:20px;
-    width:24%;
   }
   .marginMovie{
       margin:20px;
