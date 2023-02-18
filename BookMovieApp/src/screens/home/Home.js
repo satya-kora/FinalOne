@@ -86,7 +86,6 @@ class Home extends Component {
 .then(response =>that.setState({ releasedMovies:response}));
 
     //Get Genres
-    // xhrGenres.send(dataGenres);
     fetch('https://akash-66.github.io/Movie-Api-dB/moviesData.json', {
     method: 'GET',
     headers: {
