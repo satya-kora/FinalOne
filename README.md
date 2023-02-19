@@ -1,15 +1,15 @@
 # Team Details:
 
 ## Member 1:
-- [Name: Satya Kora]
-- [Email: sreesatya505@gmail.com]
+- Name: Satya Kora
+- Email: sreesatya505@gmail.com
 ## Member 2:
-- [Name: Akash Kesarwani]
-- [Email: akashkesarwani66@gmail.com]
+- Name: Akash Kesarwani
+- Email: akashkesarwani66@gmail.com
 
 # Group Facilitator:
-- [Name: Satya Kora]
-- [Email: sreesatya505@gmail.com]
+- Name: Satya Kora
+- Email: sreesatya505@gmail.com
 
 
 # Steps:
