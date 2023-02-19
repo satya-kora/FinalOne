@@ -65,14 +65,14 @@ class Home extends Component {
 
   }
 
-  async componentWillMount() {
+  componentWillMount() {
     //Get Upcoming Movies
     let that = this;
     fetch(this.props.baseUrl+"movies?status=PUBLISHED", {
     method: 'GET'})
-.then(response => response.json())
-.then(response =>that.setState({ upcomingMovies:response.movies}));
-//console.log(that.state.upcomingMovies)
+  .then(response => response.json())
+  .then(response =>that.setState({ upcomingMovies:response.movies}));
+  //console.log(that.state.upcomingMovies)
 
     //Get Released Movies
     fetch(this.props.baseUrl+"movies?status=RELEASED", {

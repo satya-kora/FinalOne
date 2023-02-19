@@ -58,7 +58,7 @@ class Header extends Component {
             mobileRequired: "dispNone",
             passwordRegRequired: "dispNone",
             registrationSuccess: false,
-            loggedIn: sessionStorage.getItem('access-token') == null ? false : true
+            loggedIn: false
         };
     }
 
@@ -77,28 +77,32 @@ class Header extends Component {
         this.state.username === "" ? this.setState({ usernameRequired: "dispBlock" }) : this.setState({ usernameRequired: "dispNone" });
         this.state.password === "" ? this.setState({ passwordRequired: "dispBlock" }) : this.setState({ passwordRequired: "dispNone" });
 
-        if (this.state.username === "" || this.state.password === "") { return }
+        if (this.state.username === "" || this.state.password === "") { this.setState({loggedIn : true})}
+        if(this.state.username !== "" || this.state.password !== "") {
+            this.setState({loggedIn : true})
+        }
 
-        let that = this;
-        let dataLogin = null
-
-        let xhrLogin = new XMLHttpRequest();
-        xhrLogin.addEventListener("readystatechange", function () {
-            if (this.readyState === 4) {
-                console.log(xhrLogin.getResponseHeader('access-token'));
-                sessionStorage.setItem('uuid', JSON.parse(this.responseText).id);
-                sessionStorage.setItem('access-token', xhrLogin.getResponseHeader('access-token'));
-                that.setState({ loggedIn: true });
-                that.closeModalHandler();
-            }
-        })
-
-
-        xhrLogin.open("POST", this.props.baseUrl + "auth/login");
-        xhrLogin.setRequestHeader("Authorization", "Basic " + window.btoa(this.state.username + ":" + this.state.password));
-        xhrLogin.setRequestHeader("Content-Type", "application/json");
-        xhrLogin.setRequestHeader("Cache-Control", "no-cache");
-        xhrLogin.send(dataLogin);
+        //login
+        // const param = window.btoa(this.state.username + ":" + this.state.password)
+        // fetch("http://localhost:8085/api/v1/auth/login", {
+        //     method: 'POST',
+        //     headers: {
+        //         "Accept": "application/json",
+        //         "Content-Type": "application/json;charset=UTF-8",
+        //         authorization: `Basic ${param}`
+        //     }
+        // })
+        // .then(response => response.json())
+        // .then(response =>{
+        //     if(response.ok) {
+        //         this.setState({ loggedIn: true }) 
+        //     } else {
+        //         const error = new Error();
+        //         error.message = response.message || 'Something went wrong.';
+        //         throw error;
+        //     }
+        // });
+        
 
     }
     inputUsernameChangeHandler = (e) => {
@@ -136,9 +140,7 @@ class Header extends Component {
     }
 
     logoutHandler = () => {
-        console.log(sessionStorage.getItem('access-token'));
-        sessionStorage.removeItem('uuid');
-        sessionStorage.removeItem('access-token');
+        //console.log(sessionStorage.getItem('access-token'));
         this.setState({ loggedIn: false })
 
     }
@@ -150,32 +152,49 @@ class Header extends Component {
         this.state.passwordReg === "" ? this.setState({ passwordRegRequired: "dispBlock" }) : this.setState({ passwordRegRequired: "dispNone" });
         if (this.state.email === "" || this.state.firstname === "" || this.state.lastname === "" || this.state.mobile === "" || this.state.passwordReg === "") { return; }
 
-        let that = this;
-        let dataSignUp = JSON.stringify({
+        //SignUP
+        let dataSignup = JSON.stringify({
             "email_address": this.state.email,
             "first_name": this.state.firstname,
             "last_name": this.state.lastname,
-            "mobile_number": this.state.mobile,
-            "password": this.state.passwordReg
-        })
+            "mobile_number": this.state.contact,
+            "password": this.state.registerPassword
+        });
 
         let xhrSignup = new XMLHttpRequest();
+        let that = this;
         xhrSignup.addEventListener("readystatechange", function () {
             if (this.readyState === 4) {
-                console.log(this.responseText);
-                that.setState({ registrationSuccess: true })
+                that.setState({
+                    registrationSuccess: true
+                });
             }
-        })
+        });
 
         xhrSignup.open("POST", this.props.baseUrl + "signup");
         xhrSignup.setRequestHeader("Content-Type", "application/json");
         xhrSignup.setRequestHeader("Cache-Control", "no-cache");
-        xhrSignup.send(dataSignUp);
-
+        xhrSignup.send(dataSignup);
     }
 
-
-
+        // fetch("http://localhost:8085/api/v1/signup", {
+        //     body: JSON.stringify(dataSignUp),
+        //     method: 'POST',
+        //     headers: {
+        //         "Accept": "application/json",
+        //         "Content-Type": "application/json;charset=UTF-8"
+        //     }
+        // }).then(response => response.json()).then(response => {
+        //     if(response.ok) {
+        //         dataSignUp = response;
+        //         that.setState({ registrationSuccess: true })
+        //     } else {
+        //         const error = new Error();
+        //         error.message = response.message || 'Something went wrong.';
+        //         throw error;
+        //     }
+        // });
+        // console.log("Data " + dataSignUp)
     render() {
         return (
             <div>

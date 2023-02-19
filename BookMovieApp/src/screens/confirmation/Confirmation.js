@@ -49,7 +49,7 @@ const Confirmation = (props) => {
       tickets: [props.location.bookingSummary.tickets.toString()],
     });
 
-    fetch(this.props.baseUrl + "bookings", {
+    fetch(props.baseUrl + "bookings", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
