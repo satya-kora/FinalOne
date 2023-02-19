@@ -79,30 +79,9 @@ class Header extends Component {
 
         if (this.state.username === "" || this.state.password === "") { this.setState({loggedIn : true})}
         if(this.state.username !== "" || this.state.password !== "") {
-            this.setState({loggedIn : true})
+            this.setState({loggedIn : true});
+            this.closeModalHandler();
         }
-
-        //login
-        // const param = window.btoa(this.state.username + ":" + this.state.password)
-        // fetch("http://localhost:8085/api/v1/auth/login", {
-        //     method: 'POST',
-        //     headers: {
-        //         "Accept": "application/json",
-        //         "Content-Type": "application/json;charset=UTF-8",
-        //         authorization: `Basic ${param}`
-        //     }
-        // })
-        // .then(response => response.json())
-        // .then(response =>{
-        //     if(response.ok) {
-        //         this.setState({ loggedIn: true }) 
-        //     } else {
-        //         const error = new Error();
-        //         error.message = response.message || 'Something went wrong.';
-        //         throw error;
-        //     }
-        // });
-        
 
     }
     inputUsernameChangeHandler = (e) => {
@@ -176,25 +155,6 @@ class Header extends Component {
         xhrSignup.setRequestHeader("Cache-Control", "no-cache");
         xhrSignup.send(dataSignup);
     }
-
-        // fetch("http://localhost:8085/api/v1/signup", {
-        //     body: JSON.stringify(dataSignUp),
-        //     method: 'POST',
-        //     headers: {
-        //         "Accept": "application/json",
-        //         "Content-Type": "application/json;charset=UTF-8"
-        //     }
-        // }).then(response => response.json()).then(response => {
-        //     if(response.ok) {
-        //         dataSignUp = response;
-        //         that.setState({ registrationSuccess: true })
-        //     } else {
-        //         const error = new Error();
-        //         error.message = response.message || 'Something went wrong.';
-        //         throw error;
-        //     }
-        // });
-        // console.log("Data " + dataSignUp)
     render() {
         return (
             <div>
