@@ -59,7 +59,6 @@ class Details extends Component {
             //let obj = response.find(o => o.id === `${this.props.match.params.id}`);
             this.setState({ movie: response });
         });
-
     }
 
 
