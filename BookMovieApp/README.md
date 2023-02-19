@@ -1,9 +1,9 @@
 # Team Details:
 
-# Member 1:
+## Member 1:
 - [Name: Satya Kora]
 - [Email: sreesatya505@gmail.com]
-# Member 2:
+## Member 2:
 - [Name: Akash Kesarwani]
 - [Email: akashkesarwani66@gmail.com]
 
